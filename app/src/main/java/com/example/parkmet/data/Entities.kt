@@ -16,23 +16,9 @@ data class VehicleEntry(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val licensePlate: String,
     val parkingId: Int,
-    val entryTime: Long,  // timestamp in milliseconds
+    val entryTime: Long,  // when the vehicle entered
+    val exitTime: Long? = null,  // when it left (null = still parked)
+    val durationMinutes: Long? = null,  // calculated on departure
+    val cost: Double? = null,  // calculated on departure
     val qrCodePath: String
-)
-
-@Entity
-data class VehicleExit(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val entryId: Int,
-    val exitTime: Long,  // timestamp in milliseconds
-    val durationMinutes: Long,
-    val cost: Double
-)
-
-@Entity
-data class LogEntry(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val action: String,
-    val timestamp: Long,  // timestamp in milliseconds
-    val details: String
 )

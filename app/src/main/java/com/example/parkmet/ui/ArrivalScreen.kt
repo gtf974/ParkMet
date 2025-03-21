@@ -31,7 +31,7 @@ fun ArrivalScreen(parkingDao: ParkingDao, context: Context) {
 
     AppScaffold(title = "Vehicle Arrival") { modifier ->
         Column(
-            modifier = modifier.fillMaxWidth(),
+            modifier = modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

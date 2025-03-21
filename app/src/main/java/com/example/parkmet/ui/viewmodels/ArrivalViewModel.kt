@@ -26,8 +26,16 @@ class ArrivalViewModel(
             message = "Please fill all fields"
             return
         }
+        if(!licensePlate.matches(Regex("^[A-Z]{2}-\\d{3}-[A-Z]{2}$"))){
+            message = "Please enter a valid plate number"
+            return
+        }
 
         viewModelScope.launch(Dispatchers.IO) {
+            if(parkingDao.isVehicleParked(licensePlate.uppercase())){
+                message = "Vehicle already parked"
+                return@launch
+            }
             val parkings = parkingDao.getAllParkings().first() // get data once
             val parking = parkings.find { it.name == parkingName }
 
@@ -47,14 +55,6 @@ class ArrivalViewModel(
                     qrCodePath = pdfPath
                 )
                 parkingDao.insertVehicleEntry(entry)
-
-                parkingDao.insertLog(
-                    LogEntry(
-                        action = "Arrival",
-                        timestamp = timestamp,
-                        details = "Vehicle $licensePlate entered ${parking.name}"
-                    )
-                )
 
                 withContext(Dispatchers.Main) {
                     message = "QR Code generated and saved!"

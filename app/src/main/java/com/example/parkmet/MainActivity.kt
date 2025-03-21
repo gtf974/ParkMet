@@ -30,14 +30,14 @@ class MainActivity : ComponentActivity() {
                 val parkingDao = database.parkingDao()
 
 
-                //lifecycleScope.launch(Dispatchers.IO) {
-                    //database.clearAllTables()
-                    //parkingDao.insertParking(Parking(id = 1, name = "Parking Nord", availableSlots = 70, totalSlots = 70))
-                    //parkingDao.insertParking(Parking(id = 2, name = "Parking Sud", availableSlots = 70, totalSlots = 70))
-                    //parkingDao.insertParking(Parking(id = 3, name = "Parking Est", availableSlots = 70, totalSlots = 70))
-                    //parkingDao.insertParking(Parking(id = 4, name = "Parking Ouest", availableSlots = 70, totalSlots = 70))
-                    //parkingDao.insertUser(User(username = "gaetan", passwordHash = HashUtil.sha256("changemePLS")))
-                //}
+                /*lifecycleScope.launch(Dispatchers.IO) {
+                    database.clearAllTables()
+                    parkingDao.insertParking(Parking(id = 1, name = "Parking Nord", availableSlots = 70, totalSlots = 70))
+                    parkingDao.insertParking(Parking(id = 2, name = "Parking Sud", availableSlots = 70, totalSlots = 70))
+                    parkingDao.insertParking(Parking(id = 3, name = "Parking Est", availableSlots = 70, totalSlots = 70))
+                    parkingDao.insertParking(Parking(id = 4, name = "Parking Ouest", availableSlots = 70, totalSlots = 70))
+                    parkingDao.insertUser(User(username = "gaetan", passwordHash = HashUtil.sha256("changemePLS")))
+                }*/
 
                 NavHost(navController = navController, startDestination = Screen.Login.route) {
                     composable(Screen.Login.route) {
@@ -56,8 +56,8 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                     composable(Screen.Arrival.route) { ArrivalScreen(parkingDao, context = applicationContext) }
-                    composable(Screen.Departure.route) { /* TODO: Departure Screen */ }
-                    composable(Screen.Backups.route) { /* TODO: Backups Screen */ }
+                    composable(Screen.Departure.route) { DepartureScreen(parkingDao, context= applicationContext) }
+                    composable(Screen.Backups.route) { BackupsScreen(parkingDao) }
                     composable(Screen.ManageParkings.route) { ManageParkingsScreen(parkingDao) }
                 }
             }

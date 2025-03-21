@@ -7,8 +7,8 @@ import androidx.room.RoomDatabase
 
 // Defines entities included in the database and version
 @Database(
-    entities = [Parking::class, VehicleEntry::class, VehicleExit::class, LogEntry::class, User::class],
-    version = 1,
+    entities = [Parking::class, VehicleEntry::class, User::class],
+    version = 2,
     exportSchema = false
 )
 abstract class ParkingDatabase : RoomDatabase() {
@@ -28,7 +28,7 @@ abstract class ParkingDatabase : RoomDatabase() {
                     context.applicationContext,
                     ParkingDatabase::class.java,
                     "parkmet_db" // Name of the SQLite database file
-                ).build()
+                ).fallbackToDestructiveMigration().build()
                 INSTANCE = instance
                 instance
             }

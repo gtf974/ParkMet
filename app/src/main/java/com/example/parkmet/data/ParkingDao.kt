@@ -14,21 +14,10 @@ interface ParkingDao {
     @Insert
     suspend fun insertVehicleEntry(entry: VehicleEntry)
 
-    // Insert a vehicle departure record
-    @Insert
-    suspend fun insertVehicleExit(exit: VehicleExit)
-
-    // Log an action into the log history
-    @Insert
-    suspend fun insertLog(log: LogEntry)
-
     // Retrieve all parking lots
-    @Query("SELECT * FROM Parking")
+    @Query("SELECT * FROM Parking ORDER BY name")
     fun getAllParkings(): Flow<List<Parking>>
 
-    // Retrieve log history ordered by timestamp (most recent first)
-    @Query("SELECT * FROM LogEntry ORDER BY timestamp DESC")
-    fun getAllLogs(): Flow<List<LogEntry>>
 
     // Decrement available slots in the specified parking lot
     @Query("UPDATE Parking SET availableSlots = availableSlots - 1 WHERE id = :parkingId")
@@ -41,8 +30,6 @@ interface ParkingDao {
     // Retrieve vehicle entry by ID
     @Query("SELECT * FROM VehicleEntry WHERE id = :entryId")
     suspend fun getVehicleEntryById(entryId: Int): VehicleEntry?
-
-    // User management methods:
 
     // Insert a new user
     @Insert
@@ -59,4 +46,24 @@ interface ParkingDao {
     // Update parking
     @Update
     suspend fun updateParking(parking: Parking)
+
+    // Retrieve all Vehicle logs
+    @Query("SELECT * FROM VehicleEntry")
+    fun getAllVehicleEntries(): Flow<List<VehicleEntry>>
+
+    @Query("SELECT * FROM VehicleEntry WHERE parkingId = :parkingId ORDER BY entryTime DESC")
+    fun getVehicleEntriesForParking(parkingId: Int): Flow<List<VehicleEntry>>
+
+    // Update VehicleEntry log
+    @Update
+    suspend fun updateVehicleEntry(vehicleEntry: VehicleEntry)
+
+    // Count every parked car with given plate (to check if the car is parked or not)
+    @Query("SELECT COUNT(*) FROM VehicleEntry WHERE licensePlate = :plate AND exitTime IS NULL")
+    suspend fun countByPlateActive(plate: String): Int
+
+    // Actual check if the vehicle is parked
+    suspend fun isVehicleParked(plate: String): Boolean {
+        return countByPlateActive(plate) > 0
+    }
 }
