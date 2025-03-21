@@ -51,4 +51,12 @@ interface ParkingDao {
     // Login query
     @Query("SELECT * FROM User WHERE username = :username LIMIT 1")
     suspend fun getUserByUsername(username: String): User?
+
+    // Delete parking
+    @Delete
+    suspend fun deleteParking(parking: Parking)
+
+    // Update parking
+    @Update
+    suspend fun updateParking(parking: Parking)
 }

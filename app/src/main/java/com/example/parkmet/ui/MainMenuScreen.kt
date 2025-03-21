@@ -14,7 +14,7 @@ fun MainMenuScreen(
     onArrivalClick: () -> Unit,
     onDepartureClick: () -> Unit,
     onBackupsClick: () -> Unit,
-    onStatusClick: () -> Unit
+    onManageParkingsClick: () -> Unit
 ) {
     AppScaffold(title = "ParkMet Main Menu") { contentModifier ->
         Column(
@@ -50,12 +50,12 @@ fun MainMenuScreen(
             }
 
             Button(
-                onClick = onStatusClick,
+                onClick = onManageParkingsClick,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 6.dp)
             ) {
-                Text("Status")
+                Text("Manage Parkings")
             }
         }
     }

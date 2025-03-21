@@ -3,77 +3,67 @@ package com.example.parkmet.ui.viewmodel
 import android.content.Context
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.parkmet.data.*
 import com.example.parkmet.util.PdfUtil
 import com.example.parkmet.util.QrCodeUtil
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import java.io.File
+import kotlinx.coroutines.withContext
 
-class ArrivalViewModel(private val parkingDao: ParkingDao, private val context: Context) : ViewModel() {
+class ArrivalViewModel(
+    private val parkingDao: ParkingDao,
+    private val context: Context
+) : ViewModel() {
+
     var licensePlate by mutableStateOf("")
     var parkingName by mutableStateOf("")
     var message by mutableStateOf("")
 
     fun onGenerateQrCodeClick() {
         if (licensePlate.isBlank() || parkingName.isBlank()) {
-            message = "All fields are required!"
+            message = "Please fill all fields"
             return
         }
 
         viewModelScope.launch(Dispatchers.IO) {
-            val parking = parkingDao.getAllParkings()
-                .collect { parkings ->
-                    val foundParking = parkings.find { it.name == parkingName }
+            val parkings = parkingDao.getAllParkings().first() // get data once
+            val parking = parkings.find { it.name == parkingName }
 
-                    if (foundParking != null && foundParking.availableSlots > 0) {
-                        // Decrement available slot
-                        parkingDao.decrementSlot(foundParking.id)
+            if (parking != null && parking.availableSlots > 0) {
+                parkingDao.decrementSlot(parking.id)
 
-                        // Generate QR code content
-                        val qrContent = "$licensePlate;${System.currentTimeMillis()}"
+                val timestamp = System.currentTimeMillis()
+                val qrContent = "$licensePlate;$timestamp;${parking.id}"
+                val qrBitmap = QrCodeUtil.generateQrCode(qrContent)
 
-                        // Generate QR code image (ZXing)
-                        val qrBitmap = QrCodeUtil.generateQrCode(qrContent)
+                val pdfPath = PdfUtil.saveQrCodeToPdf(qrBitmap, context, licensePlate, parking)
 
-                        // Save QR code to PDF
-                        val pdfFilePath = PdfUtil.saveQrCodeToPdf(qrBitmap, context, licensePlate)
+                val entry = VehicleEntry(
+                    licensePlate = licensePlate,
+                    parkingId = parking.id,
+                    entryTime = timestamp,
+                    qrCodePath = pdfPath
+                )
+                parkingDao.insertVehicleEntry(entry)
 
-                        // Save entry record in database
-                        val entry = VehicleEntry(
-                            licensePlate = licensePlate,
-                            parkingId = foundParking.id,
-                            entryTime = System.currentTimeMillis(),
-                            qrCodePath = pdfFilePath
-                        )
-                        parkingDao.insertVehicleEntry(entry)
+                parkingDao.insertLog(
+                    LogEntry(
+                        action = "Arrival",
+                        timestamp = timestamp,
+                        details = "Vehicle $licensePlate entered ${parking.name}"
+                    )
+                )
 
-                        // Log this operation
-                        parkingDao.insertLog(
-                            LogEntry(
-                                action = "Arrival",
-                                timestamp = System.currentTimeMillis(),
-                                details = "Vehicle $licensePlate entered parking ${foundParking.name}"
-                            )
-                        )
-
-                        message = "QR Code generated successfully!"
-                    } else {
-                        message = "Parking not found or full."
-                    }
+                withContext(Dispatchers.Main) {
+                    message = "QR Code generated and saved!"
                 }
-        }
-    }
-
-    class Factory(
-        private val parkingDao: ParkingDao,
-        private val context: Context
-    ) : ViewModelProvider.Factory {
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return ArrivalViewModel(parkingDao, context) as T
+            } else {
+                withContext(Dispatchers.Main) {
+                    message = "Parking not found or full."
+                }
+            }
         }
     }
 }
