@@ -39,6 +39,15 @@ interface ParkingDao {
     @Update
     suspend fun updateUser(user: User)
 
+    // Count every user
+    @Query("SELECT COUNT(*) FROM User")
+    suspend fun countUsers(): Int
+
+    // Actual check if at least one user exists
+    suspend fun doesAtLeastOneUserExist(): Boolean {
+        return countUsers() > 0
+    }
+
     // Login query
     @Query("SELECT * FROM User WHERE username = :username LIMIT 1")
     suspend fun getUserByUsername(username: String): User?

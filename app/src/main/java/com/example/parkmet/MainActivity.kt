@@ -5,13 +5,18 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.parkmet.data.ParkingDatabase
+import com.example.parkmet.data.User
 import com.example.parkmet.session.Session
 import com.example.parkmet.ui.*
 import com.example.parkmet.ui.theme.ParkMetTheme
+import com.example.parkmet.util.HashUtil
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,6 +26,15 @@ class MainActivity : ComponentActivity() {
                 val context = LocalContext.current
                 val db = ParkingDatabase.getInstance(context)
                 val parkingDao = db.parkingDao()
+
+                LaunchedEffect(Unit) {
+                    lifecycleScope.launch(Dispatchers.IO) {
+                        if(!parkingDao.doesAtLeastOneUserExist()){
+                            parkingDao.insertUser(User(username = "admin", passwordHash = HashUtil.sha256("admin")))
+                        }
+                    }
+                }
+
 
                 // Track authentication state
                 var isAuthenticated by remember { mutableStateOf(Session.currentUser != null) }
