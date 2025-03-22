@@ -4,7 +4,9 @@ import android.content.Context
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.QrCodeScanner
+import androidx.compose.material.icons.filled.TimeToLeave
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -44,7 +46,7 @@ fun DepartureScreen(parkingDao: ParkingDao, context: Context) {
         }
     }
 
-    AppScaffold(title = "Vehicle Departure") { modifier ->
+    AppScaffold(title = "Vehicle Departure", icon= Icons.Filled.TimeToLeave) { modifier ->
         Column(
             modifier = modifier
                 .fillMaxSize()

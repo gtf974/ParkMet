@@ -2,16 +2,21 @@ package com.example.parkmet.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+// Strong, professional blue (used for primary buttons, app bar, etc.)
+val PrimaryDark = Color(0xFFFFC107)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+// Muted teal for accents (used for secondary buttons, dropdowns, etc.)
+val Secondary = Color(0xFF00897B) // Teal 600 - darker, less neon
 
-val Primary = Color(0xFF4CAF50)          // Green primary
-val PrimaryDark = Color(0xFF388E3C)
-val Secondary = Color(0xFF03A9F4)        // Blue accent
-val Background = Color(0xFFF7F7F7)
-val ErrorColor = Color(0xFFD32F2F)
+// Backgrounds (dark surfaces)
+val Background = Color(0xFF121212) // Default Material dark background
+val Surface = Color(0xFF1E1E1E)    // Slightly lifted from background
+
+// Error color (high contrast but not jarring)
+val ErrorColor = Color(0xFFEF5350) // Soft red
+
+// Text and icon color suggestions
+val OnPrimary = Color.White
+val OnSecondary = Color.White
+val OnBackground = Color(0xFFE0E0E0) // Light gray text on dark bg
+val OnSurface = Color(0xFFCCCCCC)

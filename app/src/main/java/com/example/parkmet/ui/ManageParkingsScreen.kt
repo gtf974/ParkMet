@@ -15,6 +15,7 @@ import com.example.parkmet.data.Parking
 import com.example.parkmet.data.ParkingDao
 import com.example.parkmet.ui.components.AppScaffold
 import com.example.parkmet.ui.components.IconTextButton
+import com.example.parkmet.ui.theme.Background
 import com.example.parkmet.util.ToastUtil
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -47,7 +48,7 @@ fun ManageParkingsScreen(parkingDao: ParkingDao, context: Context) {
         }
     }
 
-    AppScaffold(title = "Manage Parkings") { modifier ->
+    AppScaffold(title = "Manage Parkings", icon= Icons.Filled.LocalParking) { modifier ->
         Column(
             modifier = modifier.padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -92,7 +93,7 @@ fun ManageParkingsScreen(parkingDao: ParkingDao, context: Context) {
                                     showEditDialog = true
                                 }
                             ) {
-                                Text("Edit")
+                                Text("Edit", color= Background)
                             }
 
                             Button(
@@ -150,7 +151,7 @@ fun ManageParkingsScreen(parkingDao: ParkingDao, context: Context) {
                         }
                     }
                 }) {
-                    Text("Add")
+                    Text("Add", color= Background)
                 }
             },
             dismissButton = {
@@ -216,7 +217,7 @@ fun ManageParkingsScreen(parkingDao: ParkingDao, context: Context) {
                         }
                     }
                 }) {
-                    Text("Save")
+                    Text("Save", color = Background)
                 }
             },
             dismissButton = {

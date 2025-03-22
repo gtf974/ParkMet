@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ParkMetTheme (dynamicColor = false) {
+            ParkMetTheme {
                 val context = LocalContext.current
                 val db = ParkingDatabase.getInstance(context)
                 val parkingDao = db.parkingDao()

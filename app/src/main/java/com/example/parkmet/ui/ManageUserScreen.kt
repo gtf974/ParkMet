@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ManageAccounts
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -31,6 +32,7 @@ import com.example.parkmet.data.ParkingDao
 import com.example.parkmet.session.Session
 import com.example.parkmet.ui.components.AppScaffold
 import com.example.parkmet.ui.components.IconTextButton
+import com.example.parkmet.ui.theme.PrimaryDark
 import com.example.parkmet.util.HashUtil
 import com.example.parkmet.util.ToastUtil
 import kotlinx.coroutines.launch
@@ -53,7 +55,7 @@ fun ManageUserScreen(parkingDao: ParkingDao, context: Context){
     }
     val coroutineScope = rememberCoroutineScope();
 
-    AppScaffold(title= "Manage User") { modifier ->
+    AppScaffold(title= "Manage User", icon= Icons.Filled.ManageAccounts) { modifier ->
         Box(
             modifier = modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
@@ -64,7 +66,7 @@ fun ManageUserScreen(parkingDao: ParkingDao, context: Context){
                 verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically)
             ) {
 
-                Text("Edit user", style = MaterialTheme.typography.headlineMedium)
+                Text("Edit user", style = MaterialTheme.typography.headlineMedium, color= PrimaryDark)
 
                 OutlinedTextField(
                     singleLine = true,
@@ -84,7 +86,7 @@ fun ManageUserScreen(parkingDao: ParkingDao, context: Context){
                         val image = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
                         val description = if (passwordVisible) "Hide password" else "Show password"
                         IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                            Icon(imageVector = image, contentDescription = description)
+                            Icon(imageVector = image, contentDescription = description, tint= PrimaryDark)
                         }
                     }
                 )
@@ -100,7 +102,7 @@ fun ManageUserScreen(parkingDao: ParkingDao, context: Context){
                         val image = if (passwordConfirmationVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
                         val description = if (passwordConfirmationVisible) "Hide password" else "Show password"
                         IconButton(onClick = { passwordConfirmationVisible = !passwordConfirmationVisible }) {
-                            Icon(imageVector = image, contentDescription = description)
+                            Icon(imageVector = image, contentDescription = description, tint= PrimaryDark)
                         }
                     }
                 )

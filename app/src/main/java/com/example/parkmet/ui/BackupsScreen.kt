@@ -3,6 +3,9 @@ package com.example.parkmet.ui
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -43,7 +46,7 @@ fun BackupsScreen(parkingDao: ParkingDao) {
         }
     }
 
-    AppScaffold(title = "Backups") { modifier ->
+    AppScaffold(title = "Backups", icon= Icons.AutoMirrored.Filled.List) { modifier ->
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -93,7 +96,7 @@ fun BackupsScreen(parkingDao: ParkingDao) {
                     Card(
                         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
                         colors = CardDefaults.cardColors(
-                            containerColor = if (isExited) MaterialTheme.colorScheme.surface else Color(0xFFFFF0F0)
+                            containerColor = MaterialTheme.colorScheme.surface
                         )
                     ) {
                         Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {

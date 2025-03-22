@@ -40,7 +40,7 @@ fun ArrivalScreen(parkingDao: ParkingDao, context: Context) {
         }
     }
 
-    AppScaffold(title = "Vehicle Arrival") { modifier ->
+    AppScaffold(title = "Vehicle Arrival", icon= Icons.Filled.QrCode) { modifier ->
         Column(
             modifier = modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,

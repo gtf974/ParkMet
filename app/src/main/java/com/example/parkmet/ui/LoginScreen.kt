@@ -15,6 +15,7 @@ import com.example.parkmet.data.ParkingDao
 import com.example.parkmet.session.Session
 import com.example.parkmet.ui.components.AppScaffold
 import com.example.parkmet.ui.components.IconTextButton
+import com.example.parkmet.ui.theme.PrimaryDark
 import com.example.parkmet.util.HashUtil
 import com.example.parkmet.util.ToastUtil
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +24,7 @@ import kotlinx.coroutines.withContext
 
 @Composable
 fun LoginScreen(parkingDao: ParkingDao, context: Context, onLoginSuccess: () -> Unit) {
-    AppScaffold(title = "Login") { modifier ->
+    AppScaffold(title = "Login", icon= Icons.AutoMirrored.Filled.Login) { modifier ->
         val coroutineScope = rememberCoroutineScope()
         var username by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
@@ -41,7 +42,7 @@ fun LoginScreen(parkingDao: ParkingDao, context: Context, onLoginSuccess: () -> 
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text("Login", style = MaterialTheme.typography.headlineMedium)
+            Text("Welcome back!", style = MaterialTheme.typography.headlineMedium, color = PrimaryDark)
 
             Spacer(modifier = Modifier.height(16.dp))
 
