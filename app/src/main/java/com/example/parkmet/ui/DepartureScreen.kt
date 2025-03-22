@@ -3,26 +3,34 @@ package com.example.parkmet.ui
 import android.content.Context
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.QrCodeScanner
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.parkmet.data.ParkingDao
 import com.example.parkmet.ui.components.AppScaffold
+import com.example.parkmet.ui.components.IconTextButton
 import com.example.parkmet.util.PriceUtil.calculateParkingPrice
+import com.example.parkmet.util.ToastUtil.showToast
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import java.util.concurrent.TimeUnit
 
 @Composable
 fun DepartureScreen(parkingDao: ParkingDao, context: Context) {
-    var resultMessage by remember { mutableStateOf("") }
+    var toastMessage by remember { mutableStateOf<String?>(null) }
     val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(toastMessage) {
+        toastMessage?.let {
+            showToast(context, it)
+            toastMessage = null
+        }
+    }
 
     val scannerLauncher = rememberLauncherForActivityResult(
         contract = ScanContract()
@@ -30,7 +38,7 @@ fun DepartureScreen(parkingDao: ParkingDao, context: Context) {
         result.contents?.let { scannedContent ->
             coroutineScope.launch {
                 processDepartureQr(scannedContent, parkingDao) { message ->
-                    resultMessage = message
+                    toastMessage = message
                 }
             }
         }
@@ -45,15 +53,17 @@ fun DepartureScreen(parkingDao: ParkingDao, context: Context) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Button(onClick = {
+            IconTextButton(
+                text= "Scan QR Code",
+                icon= Icons.Filled.QrCodeScanner,
+                isTakingFullWith = false,
+                onClick = {
                 scannerLauncher.launch(ScanOptions().apply {
                     setPrompt("Scan vehicle QR code")
                     setBeepEnabled(true)
                     setOrientationLocked(false)
                 })
-            }) {
-                Text("Scan QR Code")
-            }
+            })
         }
     }
 }

@@ -1,61 +1,80 @@
 package com.example.parkmet.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
+import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.QrCode
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.example.parkmet.session.Session
 import com.example.parkmet.ui.components.AppScaffold
+import com.example.parkmet.ui.components.IconTextButton
 
 @Composable
-fun MainMenuScreen(
-    modifier: Modifier = Modifier,
-    onArrivalClick: () -> Unit,
-    onDepartureClick: () -> Unit,
-    onBackupsClick: () -> Unit,
-    onManageParkingsClick: () -> Unit
-) {
-    AppScaffold(title = "ParkMet Main Menu") { contentModifier ->
-        Column(
-            modifier = contentModifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+fun MainMenuScreen(navController: NavController, onLogout: () -> Unit) {
+    AppScaffold(title = "Main Menu") { modifier ->
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(16.dp)
         ) {
-            Button(
-                onClick = onArrivalClick,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 6.dp)
+            // Main vertical menu
+            Column(
+                modifier = Modifier.align(Alignment.Center),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text("Arrival")
+                IconTextButton("Arrival", Icons.Filled.QrCode) {
+                    navController.navigate("arrival")
+                }
+
+                IconTextButton("Departure", Icons.Filled.ExitToApp) {
+                    navController.navigate("departure")
+                }
+
+                IconTextButton("Manage Parkings", Icons.Filled.Settings) {
+                    navController.navigate("manage_parkings")
+                }
+
+                IconTextButton("Backups", Icons.AutoMirrored.Filled.List) {
+                    navController.navigate("backups")
+                }
             }
 
-            Button(
-                onClick = onDepartureClick,
+            // Settings + Logout in bottom right
+            Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 6.dp)
+                    .align(Alignment.BottomEnd)
+                    .padding(6.dp),
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
             ) {
-                Text("Departure")
-            }
+                IconButton(onClick = {
+                    navController.navigate("manage_user")
+                }) {
+                    Icon(
+                        imageVector = Icons.Filled.Settings,
+                        contentDescription = "Manage User"
+                    )
+                }
 
-            Button(
-                onClick = onBackupsClick,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 6.dp)
-            ) {
-                Text("Backups")
-            }
-
-            Button(
-                onClick = onManageParkingsClick,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 6.dp)
-            ) {
-                Text("Manage Parkings")
+                IconButton(onClick = {
+                    onLogout()
+                }) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ExitToApp,
+                        contentDescription = "Logout"
+                    )
+                }
             }
         }
     }

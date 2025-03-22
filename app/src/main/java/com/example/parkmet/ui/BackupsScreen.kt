@@ -91,6 +91,7 @@ fun BackupsScreen(parkingDao: ParkingDao) {
                     val exitDate = entry.exitTime?.let { sdf.format(Date(it)) } ?: "—"
 
                     Card(
+                        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
                         colors = CardDefaults.cardColors(
                             containerColor = if (isExited) MaterialTheme.colorScheme.surface else Color(0xFFFFF0F0)
                         )

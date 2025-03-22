@@ -19,7 +19,7 @@ class ArrivalViewModel(
 
     var licensePlate by mutableStateOf("")
     var parkingName by mutableStateOf("")
-    var message by mutableStateOf("")
+    var message by mutableStateOf<String?>(null)
 
     fun onGenerateQrCodeClick() {
         if (licensePlate.isBlank() || parkingName.isBlank()) {
@@ -46,7 +46,7 @@ class ArrivalViewModel(
                 val qrContent = "$licensePlate;$timestamp;${parking.id}"
                 val qrBitmap = QrCodeUtil.generateQrCode(qrContent)
 
-                val pdfPath = PdfUtil.saveQrCodeToPdf(qrBitmap, context, licensePlate, parking)
+                val pdfPath = PdfUtil.saveQrCodeToPdf(qrBitmap, licensePlate, parking)
 
                 val entry = VehicleEntry(
                     licensePlate = licensePlate,

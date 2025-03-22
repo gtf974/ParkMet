@@ -35,6 +35,10 @@ interface ParkingDao {
     @Insert
     suspend fun insertUser(user: User)
 
+    // Update user
+    @Update
+    suspend fun updateUser(user: User)
+
     // Login query
     @Query("SELECT * FROM User WHERE username = :username LIMIT 1")
     suspend fun getUserByUsername(username: String): User?
@@ -65,5 +69,14 @@ interface ParkingDao {
     // Actual check if the vehicle is parked
     suspend fun isVehicleParked(plate: String): Boolean {
         return countByPlateActive(plate) > 0
+    }
+
+    // Count every user with given username
+    @Query("SELECT COUNT(*) FROM User WHERE username = :username")
+    suspend fun countUserByUsername(username: String): Int
+
+    // Actual check if the username is taken
+    suspend fun isUsernameTaken(username: String): Boolean {
+        return countByPlateActive(username) > 0
     }
 }

@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object PdfUtil {
-    fun saveQrCodeToPdf(bitmap: Bitmap, context: Context, licensePlate: String, parking: Parking): String {
+    fun saveQrCodeToPdf(bitmap: Bitmap, licensePlate: String, parking: Parking): String {
         val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         val fileName = "QR_${licensePlate}_${System.currentTimeMillis()}.pdf"
         val pdfFile = File(downloadsDir, fileName)

@@ -1,8 +1,11 @@
 package com.example.parkmet.ui
 
+import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.LocalParking
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -11,11 +14,13 @@ import androidx.compose.ui.unit.dp
 import com.example.parkmet.data.Parking
 import com.example.parkmet.data.ParkingDao
 import com.example.parkmet.ui.components.AppScaffold
+import com.example.parkmet.ui.components.IconTextButton
+import com.example.parkmet.util.ToastUtil
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @Composable
-fun ManageParkingsScreen(parkingDao: ParkingDao) {
+fun ManageParkingsScreen(parkingDao: ParkingDao, context: Context) {
     var parkings by remember { mutableStateOf<List<Parking>>(emptyList()) }
     var showDialog by remember { mutableStateOf(false) }
     var newName by remember { mutableStateOf("") }
@@ -23,6 +28,13 @@ fun ManageParkingsScreen(parkingDao: ParkingDao) {
     var showEditDialog by remember { mutableStateOf(false) }
     var selectedParking by remember { mutableStateOf<Parking?>(null) }
     var editError by remember { mutableStateOf<String?>(null) }
+
+    LaunchedEffect(editError) {
+        editError?.let {
+            ToastUtil.showToast(context, it)
+            editError = null
+        }
+    }
 
 
     val coroutineScope = rememberCoroutineScope()
@@ -36,13 +48,16 @@ fun ManageParkingsScreen(parkingDao: ParkingDao) {
     }
 
     AppScaffold(title = "Manage Parkings") { modifier ->
-        Column(modifier = modifier.padding(16.dp)) {
-            Button(
-                onClick = { showDialog = true },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Add Parking")
-            }
+        Column(
+            modifier = modifier.padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            IconTextButton(
+                text= "Add Parking",
+                isTakingFullWith = false,
+                icon= Icons.Filled.LocalParking,
+                onClick = { showDialog = true }
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -168,11 +183,6 @@ fun ManageParkingsScreen(parkingDao: ParkingDao) {
                         label = { Text("Total Slots") },
                         modifier = Modifier.fillMaxWidth()
                     )
-
-                    if (editError != null) {
-                        Spacer(Modifier.height(8.dp))
-                        Text(editError!!, color = MaterialTheme.colorScheme.error)
-                    }
                 }
             },
             confirmButton = {

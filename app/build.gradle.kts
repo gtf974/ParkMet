@@ -79,4 +79,7 @@ dependencies {
 
     // Navigation between pages
     implementation(libs.androidx.navigation.compose)
+
+    // Icons
+    implementation(libs.material.icons.extended)
 }

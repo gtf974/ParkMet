@@ -2,6 +2,8 @@ package com.example.parkmet.ui
 
 import android.content.Context
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.QrCode
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -10,7 +12,9 @@ import androidx.compose.ui.unit.dp
 import com.example.parkmet.data.Parking
 import com.example.parkmet.data.ParkingDao
 import com.example.parkmet.ui.components.AppScaffold
+import com.example.parkmet.ui.components.IconTextButton
 import com.example.parkmet.ui.viewmodel.ArrivalViewModel
+import com.example.parkmet.util.ToastUtil
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -22,6 +26,13 @@ fun ArrivalScreen(parkingDao: ParkingDao, context: Context) {
     var parkings by remember { mutableStateOf<List<Parking>>(emptyList()) }
     var expanded by remember { mutableStateOf(false) }
     var selectedParking by remember { mutableStateOf<Parking?>(null) }
+
+    LaunchedEffect(viewModel.message) {
+        viewModel.message?.let {
+            ToastUtil.showToast(context, it)
+            viewModel.message = null
+        }
+    }
 
     LaunchedEffect(Unit) {
         parkingDao.getAllParkings().collectLatest {
@@ -72,21 +83,16 @@ fun ArrivalScreen(parkingDao: ParkingDao, context: Context) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Button(
+            IconTextButton(
+                text= "Generate QR Code",
+                icon= Icons.Filled.QrCode,
+                isTakingFullWith = false,
                 onClick = {
                     coroutineScope.launch {
                         viewModel.onGenerateQrCodeClick()
                     }
-                },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Generate QR Code")
-            }
-
-            if (viewModel.message.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(12.dp))
-                Text(viewModel.message, color = MaterialTheme.colorScheme.primary)
-            }
+                }
+            )
         }
     }
 }
