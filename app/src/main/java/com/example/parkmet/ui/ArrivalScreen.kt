@@ -58,15 +58,13 @@ fun ArrivalScreen(parkingDao: ParkingDao, context: Context) {
             // Dropdown for Parking selection
             Box(modifier = Modifier.fillMaxWidth()) {
                 OutlinedButton(
-                    onClick = { expanded = true },
-                    modifier = Modifier.fillMaxWidth()
+                    onClick = { expanded = true }
                 ) {
                     Text(selectedParking?.name ?: "Select Parking")
                 }
                 DropdownMenu(
                     expanded = expanded,
-                    onDismissRequest = { expanded = false },
-                    modifier = Modifier.fillMaxWidth()
+                    onDismissRequest = { expanded = false }
                 ) {
                     parkings.forEach { parking ->
                         DropdownMenuItem(

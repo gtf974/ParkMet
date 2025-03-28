@@ -49,8 +49,7 @@ fun LoginScreen(parkingDao: ParkingDao, context: Context, onLoginSuccess: () -> 
             OutlinedTextField(
                 value = username,
                 onValueChange = { username = it },
-                label = { Text("Username") },
-                modifier = Modifier.fillMaxWidth()
+                label = { Text("Username") }
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -59,8 +58,7 @@ fun LoginScreen(parkingDao: ParkingDao, context: Context, onLoginSuccess: () -> 
                 value = password,
                 onValueChange = { password = it },
                 label = { Text("Password") },
-                visualTransformation = PasswordVisualTransformation(),
-                modifier = Modifier.fillMaxWidth()
+                visualTransformation = PasswordVisualTransformation()
             )
 
             Spacer(modifier = Modifier.height(16.dp))
