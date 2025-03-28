@@ -3,6 +3,7 @@ package com.example.parkmet.ui
 import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.QrCode
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -49,20 +50,23 @@ fun ArrivalScreen(parkingDao: ParkingDao, context: Context) {
             OutlinedTextField(
                 value = viewModel.licensePlate,
                 onValueChange = { viewModel.licensePlate = it },
-                label = { Text("License Plate") },
-                modifier = Modifier.fillMaxWidth()
+                label = { Text("License Plate") }
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             // Dropdown for Parking selection
-            Box(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                 OutlinedButton(
                     onClick = { expanded = true }
                 ) {
-                    Text(selectedParking?.name ?: "Select Parking")
+                    Row (horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically){
+                        Icon(Icons.Filled.ArrowDropDown, "")
+                        Text(selectedParking?.name ?: "Select Parking")
+                    }
                 }
                 DropdownMenu(
+                    modifier = Modifier.fillMaxWidth(),
                     expanded = expanded,
                     onDismissRequest = { expanded = false }
                 ) {
