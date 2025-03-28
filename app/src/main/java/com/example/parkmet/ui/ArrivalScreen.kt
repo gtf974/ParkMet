@@ -46,7 +46,7 @@ fun ArrivalScreen(parkingDao: ParkingDao, context: Context) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            TextField(
+            OutlinedTextField(
                 value = viewModel.licensePlate,
                 onValueChange = { viewModel.licensePlate = it },
                 label = { Text("License Plate") },
