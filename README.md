@@ -39,4 +39,4 @@ Ensuite, exécutez l’application sur un émulateur ou un appareil avec Android
 - **Identifiant** : `admin`
 - **Mot de passe** : `admin`
 
-> 🔒 **Important :** Pour des raisons de sécurité, il est fortement recommandé de modifier le mot de passe par défaut dans la section **Profil** lors de la première connexion.
+> 🔒 **Important :** Pour des raisons de sécurité, il est fortement recommandé de modifier le mot de passe par défaut dans la section **Manage User (Icône engrenage en bas à droite)** lors de la première connexion.
