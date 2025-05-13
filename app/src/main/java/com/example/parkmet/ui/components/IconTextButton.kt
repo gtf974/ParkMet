@@ -15,6 +15,8 @@ import androidx.compose.ui.unit.dp
 import com.example.parkmet.ui.theme.Background
 import com.example.parkmet.ui.theme.PrimaryDark
 
+// Button with text and Icon
+
 @Composable
 fun IconTextButton(text: String, icon: ImageVector, isTakingFullWith: Boolean=true, onClick: () -> Unit) {
     Card(

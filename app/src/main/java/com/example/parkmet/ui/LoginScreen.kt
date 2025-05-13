@@ -22,6 +22,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+// View & Controller for login page
+
 @Composable
 fun LoginScreen(parkingDao: ParkingDao, context: Context, onLoginSuccess: () -> Unit) {
     AppScaffold(title = "Login", icon= Icons.AutoMirrored.Filled.Login) { modifier ->
@@ -58,7 +60,7 @@ fun LoginScreen(parkingDao: ParkingDao, context: Context, onLoginSuccess: () -> 
                 value = password,
                 onValueChange = { password = it },
                 label = { Text("Password") },
-                visualTransformation = PasswordVisualTransformation()
+                visualTransformation = PasswordVisualTransformation() // Hides input
             )
 
             Spacer(modifier = Modifier.height(16.dp))

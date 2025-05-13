@@ -24,6 +24,8 @@ import com.example.parkmet.ui.components.AppScaffold
 import com.example.parkmet.ui.components.IconTextButton
 import com.example.parkmet.ui.theme.PrimaryDark
 
+// View & Controller for the main menu page
+
 @Composable
 fun MainMenuScreen(navController: NavController, onLogout: () -> Unit) {
     AppScaffold(title = "Main Menu", icon= Icons.Filled.FolderCopy) { modifier ->
@@ -39,19 +41,19 @@ fun MainMenuScreen(navController: NavController, onLogout: () -> Unit) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 IconTextButton("Arrival", Icons.Filled.QrCode) {
-                    navController.navigate("arrival")
+                    navController.navigate("arrival") // Goes to arrival screen
                 }
 
                 IconTextButton("Departure", Icons.Filled.TimeToLeave) {
-                    navController.navigate("departure")
+                    navController.navigate("departure") // Goes to departure screen
                 }
 
                 IconTextButton("Manage Parkings", Icons.Filled.LocalParking) {
-                    navController.navigate("manage_parkings")
+                    navController.navigate("manage_parkings") // Goes to manage_parking screen
                 }
 
                 IconTextButton("Backups", Icons.AutoMirrored.Filled.List) {
-                    navController.navigate("backups")
+                    navController.navigate("backups") // Goes to backups screen
                 }
             }
 

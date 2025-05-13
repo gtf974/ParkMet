@@ -20,6 +20,8 @@ import com.example.parkmet.util.ToastUtil
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+// View & Controller for Manage Parkings page
+
 @Composable
 fun ManageParkingsScreen(parkingDao: ParkingDao, context: Context) {
     var parkings by remember { mutableStateOf<List<Parking>>(emptyList()) }
@@ -115,7 +117,7 @@ fun ManageParkingsScreen(parkingDao: ParkingDao, context: Context) {
         }
     }
 
-    // Dialog for adding parking
+    // Pop-up for adding parking
     if (showDialog) {
         AlertDialog(
             onDismissRequest = { showDialog = false },
@@ -162,6 +164,7 @@ fun ManageParkingsScreen(parkingDao: ParkingDao, context: Context) {
         )
     }
 
+    // Pop-up for editing parking
     if (showEditDialog && selectedParking != null) {
         AlertDialog(
             onDismissRequest = {

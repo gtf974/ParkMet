@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-// Defines entities included in the database and version
+// Definition of entities included in the database and version
 @Database(
     entities = [Parking::class, VehicleEntry::class, User::class],
     version = 2,

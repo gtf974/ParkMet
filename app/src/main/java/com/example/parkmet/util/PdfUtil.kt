@@ -16,7 +16,7 @@ import java.util.*
 
 object PdfUtil {
     fun saveQrCodeToPdf(bitmap: Bitmap, licensePlate: String, parking: Parking): String {
-        val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) // Base download file
         val fileName = "QR_${licensePlate}_${System.currentTimeMillis()}.pdf"
         val pdfFile = File(downloadsDir, fileName)
 

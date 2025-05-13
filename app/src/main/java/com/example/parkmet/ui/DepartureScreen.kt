@@ -22,6 +22,8 @@ import com.journeyapps.barcodescanner.ScanOptions
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
+// View & Controller for Departures
+
 @Composable
 fun DepartureScreen(parkingDao: ParkingDao, context: Context) {
     var toastMessage by remember { mutableStateOf<String?>(null) }
@@ -34,6 +36,7 @@ fun DepartureScreen(parkingDao: ParkingDao, context: Context) {
         }
     }
 
+    // What to do when the QR code scan is completed
     val scannerLauncher = rememberLauncherForActivityResult(
         contract = ScanContract()
     ) { result: ScanIntentResult ->
@@ -59,6 +62,7 @@ fun DepartureScreen(parkingDao: ParkingDao, context: Context) {
                 text= "Scan QR Code",
                 icon= Icons.Filled.QrCodeScanner,
                 isTakingFullWith = false,
+                // launches the qr code scanner
                 onClick = {
                 scannerLauncher.launch(ScanOptions().apply {
                     setPrompt("Scan vehicle QR code")
@@ -70,6 +74,7 @@ fun DepartureScreen(parkingDao: ParkingDao, context: Context) {
     }
 }
 
+// Process the scanned QRCode, generates a price
 suspend fun processDepartureQr(
     qrContent: String,
     parkingDao: ParkingDao,

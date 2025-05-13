@@ -19,6 +19,8 @@ import com.example.parkmet.util.ToastUtil
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+// View for Arrival
+
 @Composable
 fun ArrivalScreen(parkingDao: ParkingDao, context: Context) {
     val coroutineScope = rememberCoroutineScope()

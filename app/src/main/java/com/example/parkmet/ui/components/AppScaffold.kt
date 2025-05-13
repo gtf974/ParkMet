@@ -13,6 +13,8 @@ import androidx.compose.ui.unit.dp
 import com.example.parkmet.ui.theme.Background
 import com.example.parkmet.ui.theme.PrimaryDark
 
+// Base scaffold ofr every page
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppScaffold(
@@ -22,6 +24,7 @@ fun AppScaffold(
     content: @Composable (Modifier) -> Unit
 ) {
     Scaffold(
+        // Top bar
         topBar = {
             Column {
                 TopAppBar(
@@ -48,7 +51,7 @@ fun AppScaffold(
                     )
                 )
 
-                // Yellow bottom border under the AppBar
+                // Yellow bottom border under the TopBar
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -57,7 +60,8 @@ fun AppScaffold(
                 )
             }
         },
-        containerColor = Background, // Optional: makes entire screen use same dark bg
+        containerColor = Background,
+        // Body
         content = { innerPadding ->
             Box(
                 modifier = modifier

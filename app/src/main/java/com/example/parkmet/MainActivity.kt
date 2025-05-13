@@ -27,6 +27,7 @@ class MainActivity : ComponentActivity() {
                 val db = ParkingDatabase.getInstance(context)
                 val parkingDao = db.parkingDao()
 
+                // Checks if a user exists, if not, creates a default user
                 LaunchedEffect(Unit) {
                     lifecycleScope.launch(Dispatchers.IO) {
                         if(!parkingDao.doesAtLeastOneUserExist()){
@@ -39,6 +40,7 @@ class MainActivity : ComponentActivity() {
                 // Track authentication state
                 var isAuthenticated by remember { mutableStateOf(Session.currentUser != null) }
 
+                // If the user is authenticated, displays the menu
                 if (isAuthenticated) {
                     val navController = rememberNavController()
 
@@ -53,18 +55,23 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                         }
+                        // Arrival navigation
                         composable("arrival") {
                             ArrivalScreen(parkingDao = parkingDao, context = context)
                         }
+                        // Arrival departure
                         composable("departure") {
                             DepartureScreen(parkingDao = parkingDao, applicationContext)
                         }
+                        // Arrival manage_parkings
                         composable("manage_parkings") {
                             ManageParkingsScreen(parkingDao = parkingDao, applicationContext)
                         }
+                        // Arrival backups
                         composable("backups") {
                             BackupsScreen(parkingDao = parkingDao)
                         }
+                        // Arrival manage_user
                         composable("manage_user") {
                             ManageUserScreen(parkingDao = parkingDao, applicationContext)
                         }

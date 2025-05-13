@@ -19,6 +19,8 @@ import kotlinx.coroutines.flow.collectLatest
 import java.text.SimpleDateFormat
 import java.util.*
 
+// View & Controller to display all entries from database
+
 @Composable
 fun BackupsScreen(parkingDao: ParkingDao) {
     val sdf = remember { SimpleDateFormat("dd MMM yyyy - HH:mm", Locale.getDefault()) }
@@ -37,7 +39,7 @@ fun BackupsScreen(parkingDao: ParkingDao) {
         }
     }
 
-    // Observe entries when selected parking changes
+    // Refreshes when parking changes
     LaunchedEffect(selectedParking) {
         selectedParking?.let { parking ->
             parkingDao.getVehicleEntriesForParking(parking.id).collectLatest {

@@ -3,6 +3,8 @@ package com.example.parkmet.data
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
+// DAO for the database queries
+
 @Dao
 interface ParkingDao {
 

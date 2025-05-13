@@ -37,6 +37,8 @@ import com.example.parkmet.util.HashUtil
 import com.example.parkmet.util.ToastUtil
 import kotlinx.coroutines.launch
 
+// View & Controller for Manage User page
+
 @Composable
 fun ManageUserScreen(parkingDao: ParkingDao, context: Context){
 
@@ -80,7 +82,7 @@ fun ManageUserScreen(parkingDao: ParkingDao, context: Context){
                     label = { Text("Password") },
                     value= password,
                     onValueChange= { password = it },
-                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(), // Check if we see the input or not
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                     trailingIcon = {
                         val image = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
@@ -96,7 +98,7 @@ fun ManageUserScreen(parkingDao: ParkingDao, context: Context){
                     label = { Text("Password Confirmation") },
                     value= passwordConfirmation,
                     onValueChange= { passwordConfirmation = it },
-                    visualTransformation = if (passwordConfirmationVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                    visualTransformation = if (passwordConfirmationVisible) VisualTransformation.None else PasswordVisualTransformation(), // Check if we see the input or not
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                     trailingIcon = {
                         val image = if (passwordConfirmationVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
@@ -112,16 +114,19 @@ fun ManageUserScreen(parkingDao: ParkingDao, context: Context){
                     isTakingFullWith = false,
                     icon= Icons.Filled.Save,
                     onClick = {
+                        // Password must be present
                         if (password.isBlank() || passwordConfirmation.isBlank() || login.isBlank()){
                             message = "Please fill in the fields"
                             return@IconTextButton
                         }
 
+                        // Password & Password confirmation must match
                         if (password != passwordConfirmation){
                             message = "The passwords don't match"
                             return@IconTextButton
                         }
 
+                        // Password must contain at least 12 characters, 1 uppercase, 1 lowercase, 1 symbol
                         if (!password.matches(Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z\\d])[\\S]{12,}$"))){
                             message = "Password is too weak"
                             return@IconTextButton
